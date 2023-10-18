@@ -10,8 +10,7 @@ public class Factura {
 	private int iva;
 	private int valorTotal;
 	
-	//private Cajero cajero;
-	//private Cliente cliente;
+	
 	private ArrayList<FacturaProducto> facturaProductos;
 	
 	public int getNumero() {
@@ -38,18 +37,7 @@ public class Factura {
 	public void setValorTotal(int valorTotal) {
 		this.valorTotal = valorTotal;
 	}
-	/*public Cajero getCajero() {
-		return cajero;
-	}
-	public void setCajero(Cajero cajero) {
-		this.cajero = cajero;
-	}
-	public Cliente getCliente() {
-		return cliente;
-	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}*/
+
 	public ArrayList<FacturaProducto> getFacturaProductos() {
 		return facturaProductos;
 	}
@@ -62,8 +50,6 @@ public class Factura {
 		super();
 		this.numero = numero;
 		this.fecha = fecha;
-		//this.cajero = cajero;
-		//this.cliente = cliente;
 		this.facturaProductos = new ArrayList<FacturaProducto>();
 	}
 	

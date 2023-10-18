@@ -12,15 +12,15 @@ public class Restaurante {
 	private ArrayList<Factura> facturas;
 	private ArrayList<Componentes> componentes;
 	private ArrayList<Ingredientes> ingredientes;
-	//ingredietnes
 	
 	public Restaurante() {
-//		this.tipoProductos = new ArrayList<TipoProducto>();
+
 		this.productos = new ArrayList<Producto>();
 		this.combos = new ArrayList<Combos>();
 		this.ingredientes = new ArrayList<Ingredientes>();
-		//ingredientes, componentes
-	}
+		this.componentes = new ArrayList<Componentes>();
+
+	} 
 
 	public void ingresarProducto(int codigo, String nombre, int precioVenta) {
 		Producto productosT = new Producto(codigo, nombre, precioVenta);		
@@ -48,7 +48,7 @@ public class Restaurante {
 					combos.getBebida().getPrecioVenta() + 
 					combos.getAcompanamiento().getPrecioVenta())*0.9;
 				System.out.println("Codigo Producto: " + combos.getId());
-				System.out.println("Hamburguesa: " + combos.getHamburguesa().getNombre());
+				System.out.println("Producto: " + combos.getHamburguesa().getNombre());
 				System.out.println("Bebida: " + combos.getBebida().getNombre());
 				System.out.println("Acompañamiento: " + combos.getAcompanamiento().getNombre());
 				System.out.println("Precio Venta: " + precio);
@@ -68,11 +68,11 @@ public class Restaurante {
 		lineas = Archivo.leerArchivo("Combos.dat");
 		for(String linea : lineas) {
 			String datos[] = linea.split(",");
-			Producto hamburguesa = buscarProducto(Integer.parseInt(datos[1]));
+			Producto producto = buscarProducto(Integer.parseInt(datos[1]));
 			Producto bebida = buscarProducto(Integer.parseInt(datos[2]));
 			Producto acompanamiento = buscarProducto(Integer.parseInt(datos[3]));
 						
-			this.ingresarCombos(Integer.parseInt(datos[0]), hamburguesa, bebida, acompanamiento);
+			this.ingresarCombos(Integer.parseInt(datos[0]), producto, bebida, acompanamiento);
 		}
 		
 		lineas = Archivo.leerArchivo("Ingredientes.dat");
@@ -97,18 +97,10 @@ public class Restaurante {
 			
 			componente.setTipoAlimento(datos[0]);
 			componente.setComponentes(ingredientes);
-		//	componentes.add(componente);
+			componentes.add(componente);
 		}
 	}
-	/*
-	public {
-		
-		Producto = hamburguesa , 2;
-		Componentes = cod 2; //1,2,3,5,6,7,10,11,9
-		lista ingredientes = buscarIngredientes(2)
-				imprimir lista de ingredientes 
-	}
-	*/
+
 	
 	public Ingredientes buscarIngredientes(Integer idIngrediente) {
 		for(Ingredientes ingrediente : this.ingredientes) {
@@ -120,8 +112,6 @@ public class Restaurante {
 	}
 	
 	
-
-	
 	private Producto buscarProducto(Integer idProducto) {
 		for(Producto producto : this.productos) {
 			if(producto.getCodigo() == idProducto) {
@@ -132,18 +122,17 @@ public class Restaurante {
 	}
 	
 	
-/*	
-	private Producto buscarCombo(Integer idCombo) {
-		for(Producto producto : this.productos) {
-			if(producto.getCodigo() == idCombo) {
-				return producto;
+	private Combos buscarCombo(Integer idCombo) {
+		for(Combos combo : this.combos) {
+			if(combo.getId() == idCombo) {
+				return combo;
 			}
 		}
 		return null;
 	}
-	*/
+	
 
-	public void generarFactura(Date fecha, ArrayList<Integer> productosSeleccionados) {//[1,3,5]
+	public void generarFactura(Date fecha, ArrayList<Integer> productosSeleccionados) {
 		
 		ArrayList<Producto> listaProductosComprados = new ArrayList<Producto>();
 		for(Integer productos : productosSeleccionados) {
@@ -157,57 +146,51 @@ public class Restaurante {
 		
 
 		for(Producto listaProductos : listaProductosComprados) {
-			System.out.println("Nombre del Producto: \n" + listaProductos.getNombre());
-		}
-		for(Producto listaProductos : listaProductosComprados) {
-			System.out.println("Codigo del producto: \n" + listaProductos.getCodigo());
-		}
-
-		for(Producto listaProductos : listaProductosComprados) {
-			System.out.println("Costo de producto: \n" + listaProductos.getPrecioVenta());
-		}
-		for(Producto listaProductos : listaProductosComprados) {
+			System.out.println("Nombre del Producto:  " + listaProductos.getNombre());
+			System.out.println("Codigo del producto:   " + listaProductos.getCodigo());
+			System.out.println("Costo de producto:   " + listaProductos.getPrecioVenta());
 			total += listaProductos.getPrecioVenta();
+			System.out.println("\n------------------------------------\n");
 		}
-			System.out.print("Precio total a pagar: \n" + total);
+			System.out.print("Precio total a pagar:  " + total);
 			System.out.print("\n"); 
 			System.out.print("Gracias por su compra :D\n");
+			System.out.println("\n");
 	}
 	
 
-	/*public void generarFacturaCombos(Date fecha, ArrayList<Integer> productosSeleccionados) {
+	public void generarFacturaCombos(Date fecha, ArrayList<Integer> combosSeleccionados) {
 		
 		ArrayList<Combos> listaCombosComprados = new ArrayList<Combos>();
-		for(Integer combos : productosSeleccionados) {
-			Combo comboComprado = buscarCombo(productos);
+		for(Integer combos : combosSeleccionados) {
+			Combos comboComprado = buscarCombo(combos);
 			if(comboComprado != null) {
 				listaCombosComprados.add(comboComprado);
 			}
 		}
 		
-		Integer total = 0;
+		Double total = 0.0;
 		
 
-		for(Producto listaCombos : listaCombosComprados) {
-			System.out.println("Nombre del Producto: \n" + listaCombos.getNombre());
-		}
-		for(Producto listaCombos : listaCombosComprados) {
-			System.out.println("Codigo del producto: \n" + listaCombos.getCodigo());
-		}
 
-		for(Producto listaCombos : listaCombosComprados) {
-			System.out.println("Costo de producto: \n" + listaCombos.getPrecioVenta());
+		for(Combos listaCombos : listaCombosComprados) {
+			System.out.println("Codigo del producto: \n" + listaCombos.getId());
+	
+			Double precio = (listaCombos.getHamburguesa().getPrecioVenta() + 
+			listaCombos.getBebida().getPrecioVenta() + 
+			listaCombos.getAcompanamiento().getPrecioVenta())*0.9;
+			System.out.println("Costo de producto: \n" + precio);
+			
+			total += precio;
 		}
-		for(Producto listaCombos : listaCombosComprados) {
-			total += listaCombos.getPrecioVenta();
-		}
+		
 			System.out.print("Precio total a pagar: \n" + total);
 			System.out.print("\n"); 
 			System.out.print("Gracias por su compra :D\n");
 	}
 
 	
-	*/
+	
 	public void ingresarFactura(Date fecha, ArrayList<int[]> productosComprados) {
 	
 		int numero = this.facturas.size() + 1;
@@ -220,15 +203,4 @@ public class Restaurante {
 		this.facturas.add(factura);
 	}
 
-/*
-	public void imprimirFacturas() {
-		for(Factura factura : this.hamburguesas) {
-			System.out.println("-------");
-			System.out.println(factura.getNumero() + "\n" + factura.getFecha() + "\n" + factura.getValorTotal() + "\n" + factura.getIva());
-			for(FacturaProducto facturaProducto : factura.getFacturaProductos()) {
-				System.out.println(facturaProducto.getProducto().getNombre() + "\n" + facturaProducto.getCantidad() + "\n" + facturaProducto.getPrecio());
-			}
-		}
-		
-	}*/
 }

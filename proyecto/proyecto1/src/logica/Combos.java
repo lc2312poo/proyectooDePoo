@@ -1,11 +1,12 @@
 package logica;
 
-public class Combos {
+public class Combos extends Restaurante{
 
 	private int id;
 	private Producto hamburguesa;
 	private Producto bebida;
 	private Producto acompanamiento;
+	private int precioVenta;
 	
 	public Combos(int id, Producto hamburguesa, Producto bebida, Producto acompanamiento) {
 		super();
@@ -55,6 +56,13 @@ public class Combos {
 		this.acompanamiento = acompanamiento;
 	}
 	
+	public int getPrecioVenta() {
+		this.imprimirCombos();
+		return precioVenta;
+	}
+	public void setPrecioVenta(int precioVenta) {
+		this.precioVenta = precioVenta;
+	}
 	
 	
 }

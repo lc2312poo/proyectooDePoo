@@ -9,11 +9,13 @@ public class Principal {
 
 	private Restaurante restaurante;
 	private ArrayList<Integer> productosSeleccionados ;
+	private ArrayList<Integer> combosSeleccionados ;
 	private Scanner sc = new Scanner(System.in);
 	
 	public Principal() {
 		this.restaurante = new Restaurante();
 		this.productosSeleccionados = new ArrayList<>();
+		this.combosSeleccionados = new ArrayList<>();
 
 	}
 
@@ -33,7 +35,9 @@ public class Principal {
 					"2. Ordenar combo\n" + 
 					"3. Imprimir Factura\n" + 
 					"4. Imprimir productos\n" + 
-					"5. Imprimir combos\n");
+					"5. Imprimir combos\n" +
+					"6. Imprimir factura de combos\n");
+			
 			op = sc.nextInt();
 			if (op == 1) {
 				this.seleccionarProductos();
@@ -42,11 +46,13 @@ public class Principal {
 			} else if (op == 3) {
 				this.restaurante.generarFactura(null, productosSeleccionados);
 				productosSeleccionados = new ArrayList<Integer>();
-				// imprimirFactura(Listado de producto "productosSeleccionados")
 			} else if (op == 4) {
 				this.restaurante.imprimirProductos();
 			} else if (op == 5) {
 				this.restaurante.imprimirCombos();
+			}else if (op == 6) {
+				this.restaurante.generarFacturaCombos(null, combosSeleccionados);
+				combosSeleccionados = new ArrayList<Integer>();
 			}
 		} while (op != 0);
 		sc.close();
@@ -61,27 +67,6 @@ public class Principal {
 		op = sc.nextInt();
 		productosSeleccionados.add(op);
 		
-		do {
-			System.out.println("¿Desea realizar alguna modificación al pedido realizado?\n"+
-					"0. No\n" +
-					"1. Deseo agregar un ingrediente\n" + 
-					"2. Deseo quitar un ingrediente\n");
-			op = sc.nextInt();
-			if (op == 1) {
-			//	System.out.println("¿Qué adición desea realizar?\n");
-			//	this.restaurante.buscarIngredientes(null);
-				//agregar	
-				do {
-					System.out.println("¿Desea realizar otro cambio?\n" +
-							"0. No\n" +
-							"1. Sí\n");
-				}while(op != 0);
-				
-			}else if (op == 2) {
-				//Quitar
-			}
-		} while (op != 0);
-
 	}
 	
 	private void seleccionarCombo() {
@@ -91,7 +76,7 @@ public class Principal {
 		this.restaurante.imprimirCombos();
 		System.out.println("Digite codigo del combo :\n");
 		op = sc.nextInt();
-		productosSeleccionados.add(op);
+		combosSeleccionados.add(op);
 	}
 
 }
